@@ -34,4 +34,9 @@ public class UserController {
         userService.delete(id);
         return ResponseEntity.accepted().build();
     }
+
+    @PutMapping("/{id}")
+    public User update(@PathVariable Long id , @RequestBody User user) {
+        return userService.update(id,user);
+    }
 }
