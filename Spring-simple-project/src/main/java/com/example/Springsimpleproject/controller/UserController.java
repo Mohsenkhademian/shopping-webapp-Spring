@@ -4,6 +4,7 @@ import com.example.Springsimpleproject.model.entity.User;
 import com.example.Springsimpleproject.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,5 +27,11 @@ public class UserController {
     @GetMapping
     public List<User> findAll() {
         return userService.findAll();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete (@PathVariable Long id) {
+        userService.delete(id);
+        return ResponseEntity.accepted().build();
     }
 }

@@ -23,4 +23,11 @@ public class UserService {
     public List<User> findAll() {
         return userRepository.findAll();
     }
+
+    public void delete(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new IllegalStateException("id not exist");
+        }
+        userRepository.deleteById(id);
+    }
 }
