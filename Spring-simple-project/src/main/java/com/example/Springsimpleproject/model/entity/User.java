@@ -1,13 +1,12 @@
 package com.example.Springsimpleproject.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.google.gson.Gson;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -21,4 +20,9 @@ public class User {
 
     private String email;
     private String password;
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
+    }
 }
