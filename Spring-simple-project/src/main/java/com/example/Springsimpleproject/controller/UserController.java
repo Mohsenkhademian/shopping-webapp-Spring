@@ -3,6 +3,7 @@ package com.example.Springsimpleproject.controller;
 import com.example.Springsimpleproject.model.entity.User;
 import com.example.Springsimpleproject.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public User save(@RequestBody User user) {
         return userService.save(user);
     }
