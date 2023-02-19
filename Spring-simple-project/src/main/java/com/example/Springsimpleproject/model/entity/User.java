@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,6 +22,14 @@ public class User {
 
     private String email;
     private String password;
+
+    // One-to-many relationship with Order entity
+    @OneToMany(mappedBy = "user")
+    private Set<Order> orders = new HashSet<>();
+
+    // One-to-many relationship with Payment entity
+    @OneToMany(mappedBy = "user")
+    private Set<Payment> payments = new HashSet<>();
 
     @Override
     public String toString() {
