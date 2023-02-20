@@ -36,6 +36,7 @@ public class PaymentService {
         if (!paymentRepository.existsById(id)) {
             throw new IllegalStateException("id not exist");
         }
+        payment.setId(id);
         return paymentRepository.save(payment);
     }
 

@@ -18,9 +18,9 @@ public class Order {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private String name;
+    private String productName;
 
-    private Double price;
+    private Long price;
 
     // Many-to-one relationship with User entity
     @ManyToOne(fetch = FetchType.LAZY)

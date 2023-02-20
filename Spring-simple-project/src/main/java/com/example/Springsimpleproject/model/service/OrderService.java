@@ -38,6 +38,7 @@ public class OrderService {
         if (!orderRepository.existsById(id)) {
             throw new IllegalStateException("id not exist");
         }
+        order.setId(id);
         return orderRepository.save(order);
     }
 

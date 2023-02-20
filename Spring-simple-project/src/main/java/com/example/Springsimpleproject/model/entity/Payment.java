@@ -18,7 +18,7 @@ public class Payment {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private Double amount;
+    private Long amount;
 
     // Many-to-one relationship with User entity
     @ManyToOne(fetch = FetchType.LAZY)

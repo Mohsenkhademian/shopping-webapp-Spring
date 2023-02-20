@@ -4,6 +4,7 @@ import com.example.Springsimpleproject.model.entity.Order;
 import com.example.Springsimpleproject.model.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
         Order savedOrder = orderService.save(order);
         return new ResponseEntity<>(savedOrder, HttpStatus.CREATED);

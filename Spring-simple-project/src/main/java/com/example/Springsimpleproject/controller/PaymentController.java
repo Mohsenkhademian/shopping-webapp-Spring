@@ -4,6 +4,7 @@ import com.example.Springsimpleproject.model.entity.Payment;
 import com.example.Springsimpleproject.model.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class PaymentController {
         this.paymentService = paymentService;
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Payment> createPayment(@RequestBody Payment payment) {
         Payment savedPayment = paymentService.save(payment);
         return new ResponseEntity<>(savedPayment, HttpStatus.CREATED);
