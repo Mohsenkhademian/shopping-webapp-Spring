@@ -1,7 +1,9 @@
 package com.example.Springsimpleproject.controller;
 
+import com.example.Springsimpleproject.controller.dto.OrderDTO;
 import com.example.Springsimpleproject.model.entity.Order;
 import com.example.Springsimpleproject.model.service.OrderService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,40 +13,48 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/order")
 public class OrderController {
     private final OrderService orderService;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, ModelMapper modelMapper) {
         this.orderService = orderService;
+        this.modelMapper = modelMapper;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Order> createOrder(@RequestBody @Valid Order order) {
+    public ResponseEntity<OrderDTO> createOrder(@RequestBody @Valid OrderDTO orderDTO) {
+        Order order = modelMapper.map(orderDTO, Order.class);
         Order savedOrder = orderService.save(order);
-        return new ResponseEntity<>(savedOrder, HttpStatus.CREATED);
+        OrderDTO savedOrderDTO = modelMapper.map(savedOrder, OrderDTO.class);
+        return new ResponseEntity<>(savedOrderDTO, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<Order>> getAllOrders() {
+    public ResponseEntity<List<OrderDTO>> getAllOrders() {
         List<Order> orders = orderService.findAll();
-        return new ResponseEntity<>(orders, HttpStatus.OK);
+        List<OrderDTO> orderDTOs = orders.stream().map(order -> modelMapper.map(order, OrderDTO.class)).collect(Collectors.toList());
+        return new ResponseEntity<>(orderDTOs, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
+    public ResponseEntity<OrderDTO> getOrderById(@PathVariable Long id) {
         Optional<Order> order = orderService.findById(id);
-        return order.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+        return order.map(value -> new ResponseEntity<>(modelMapper.map(value, OrderDTO.class), HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody Order order) {
+    public ResponseEntity<OrderDTO> updateOrder(@PathVariable Long id, @RequestBody OrderDTO orderDTO) {
+        Order order = modelMapper.map(orderDTO, Order.class);
         Order updatedOrder = orderService.update(id, order);
-        return new ResponseEntity<>(updatedOrder, HttpStatus.OK);
+        OrderDTO updatedOrderDTO = modelMapper.map(updatedOrder, OrderDTO.class);
+        return new ResponseEntity<>(updatedOrderDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
