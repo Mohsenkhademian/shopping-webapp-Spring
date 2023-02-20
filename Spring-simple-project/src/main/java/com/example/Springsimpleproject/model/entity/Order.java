@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -18,8 +19,10 @@ public class Order {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @NotNull
     private String productName;
 
+    @NotNull
     private Long price;
 
     // Many-to-one relationship with User entity

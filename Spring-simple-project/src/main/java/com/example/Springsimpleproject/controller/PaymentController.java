@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +23,7 @@ public class PaymentController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Payment> createPayment(@RequestBody Payment payment) {
+    public ResponseEntity<Payment> createPayment(@RequestBody @Valid Payment payment) {
         Payment savedPayment = paymentService.save(payment);
         return new ResponseEntity<>(savedPayment, HttpStatus.CREATED);
     }

@@ -4,6 +4,7 @@ package com.example.Springsimpleproject.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -18,6 +19,7 @@ public class Payment {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @NotNull
     private Long amount;
 
     // Many-to-one relationship with User entity
