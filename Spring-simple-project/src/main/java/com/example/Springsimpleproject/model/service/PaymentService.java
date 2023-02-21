@@ -7,6 +7,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,16 +20,19 @@ public class PaymentService {
         this.paymentRepository = paymentRepository;
     }
 
+    @Transactional
     @CacheEvict(value = "users", allEntries = true)
     public Payment save(Payment payment) {
         return paymentRepository.save(payment);
     }
 
+    @Transactional
     @Cacheable(value = "users")
     public List<Payment> findAll() {
         return paymentRepository.findAll();
     }
 
+    @Transactional
     @CacheEvict(value = "users", allEntries = true)
     public void delete(Long id) {
         if (!paymentRepository.existsById(id)) {
@@ -37,6 +41,7 @@ public class PaymentService {
         paymentRepository.deleteById(id);
     }
 
+    @Transactional
     @CacheEvict(value = "users", allEntries = true)
     public Payment update(Long id , Payment payment) {
         if (!paymentRepository.existsById(id)) {
@@ -46,6 +51,7 @@ public class PaymentService {
         return paymentRepository.save(payment);
     }
 
+    @Transactional
     @Cacheable(value = "users", key = "#id")
     public Optional<Payment> findById(Long id) {
         if (!paymentRepository.existsById(id)) {
